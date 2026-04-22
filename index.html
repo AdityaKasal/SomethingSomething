@@ -142,9 +142,24 @@
     .dot { width: 6px; height: 6px; border-radius: 50%; background: #334155; transition: all 0.3s; }
     .dot.active { background: #7c3aed; width: 20px; border-radius: 3px; }
 
-    @media (max-width: 480px) {
-      .reasons-grid { grid-template-columns: 1fr 1fr; }
-      h1 { font-size: 1.8rem; }
+    @media (max-width: 600px) {
+      .page { padding: 1.2rem 1rem; justify-content: flex-start; padding-top: 3rem; overflow-y: auto; }
+      .emoji-big { font-size: 3.5rem; margin-bottom: 1rem; }
+      h1 { font-size: 1.7rem; }
+      p.sub { font-size: 0.95rem; margin-bottom: 1.5rem; }
+      .reasons-grid { grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-bottom: 1.5rem; }
+      .reason-card { padding: 0.9rem; }
+      .reason-card .icon { font-size: 1.4rem; }
+      .reason-card .value { font-size: 0.82rem; }
+      .btn { padding: 0.8rem 1.8rem; font-size: 0.95rem; }
+      .btn-yes { padding: 0.9rem 2.2rem; font-size: 1.05rem; }
+      .plan-card { padding: 1rem; margin: 0.5rem auto; }
+      .plan-row { padding: 0.5rem 0; gap: 0.6rem; }
+      .plan-row input, .plan-row textarea { font-size: 0.85rem; }
+      .summary-card { padding: 1rem; margin: 0.5rem auto; }
+      .heart-big { font-size: 3.5rem; }
+      .dots { bottom: 1rem; }
+      .orb1, .orb2, .orb3 { display: none; }
     }
   </style>
 </head>
@@ -381,8 +396,10 @@
   function runAway() {
     noClicks++;
     const btn = document.getElementById('noBtn');
-    const x = Math.random() * (window.innerWidth - 140);
-    const y = Math.random() * (window.innerHeight - 60);
+    const btnW = btn.offsetWidth || 100;
+    const btnH = btn.offsetHeight || 44;
+    const x = Math.random() * (window.innerWidth - btnW - 10);
+    const y = Math.random() * (window.innerHeight - btnH - 10);
     btn.style.left = x + 'px';
     btn.style.top  = y + 'px';
 
