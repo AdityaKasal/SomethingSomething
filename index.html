@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hey Hasini 🌸</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0a0a0f;
+      color: white;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    .stars { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+    .star {
+      position: absolute; width: 2px; height: 2px; background: white;
+      border-radius: 50%; animation: twinkle var(--d) ease-in-out infinite; opacity: 0;
+    }
+    @keyframes twinkle { 0%, 100% { opacity: 0; } 50% { opacity: var(--o); } }
+
+    .page {
+      position: fixed; inset: 0; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; padding: 2rem;
+      z-index: 1; opacity: 0; pointer-events: none;
+      transition: opacity 0.6s ease; text-align: center;
+    }
+    .page.active { opacity: 1; pointer-events: all; }
+
+    .orb { position: fixed; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0; }
+    .orb1 { width: 400px; height: 400px; background: #7c3aed33; top: -100px; left: -100px; }
+    .orb2 { width: 300px; height: 300px; background: #db277733; bottom: -50px; right: -50px; }
+    .orb3 { width: 250px; height: 250px; background: #2563eb22; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+
+    .emoji-big { font-size: 5rem; margin-bottom: 1.5rem; animation: float 3s ease-in-out infinite; }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+
+    h1 { font-size: clamp(1.8rem, 5vw, 3rem); font-weight: 800; line-height: 1.2; margin-bottom: 1rem; }
+    .highlight { background: linear-gradient(135deg, #a78bfa, #f472b6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+    p.sub { color: #94a3b8; font-size: 1.1rem; max-width: 480px; line-height: 1.7; margin-bottom: 2.5rem; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.9rem 2.2rem; border-radius: 999px; font-size: 1rem;
+      font-weight: 600; cursor: pointer; border: none; transition: all 0.2s ease;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #7c3aed, #db2777);
+      color: white; box-shadow: 0 0 30px #7c3aed44;
+    }
+    .btn-primary:hover { transform: scale(1.05); box-shadow: 0 0 40px #7c3aed66; }
+    .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+    .reasons-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 1rem; max-width: 500px; margin-bottom: 2.5rem;
+    }
+    .reason-card {
+      background: #ffffff0a; border: 1px solid #ffffff0f; border-radius: 16px;
+      padding: 1.2rem; text-align: left; backdrop-filter: blur(10px);
+      animation: popIn 0.4s ease both;
+    }
+    @keyframes popIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+    .reason-card .icon { font-size: 1.8rem; margin-bottom: 0.5rem; }
+    .reason-card .label { font-size: 0.85rem; color: #94a3b8; }
+    .reason-card .value { font-size: 0.95rem; font-weight: 600; color: white; margin-top: 0.2rem; }
+
+    .yesno-container {
+      display: flex; gap: 1.5rem; align-items: center;
+      flex-wrap: wrap; justify-content: center; margin-top: 2rem; position: relative; min-height: 60px;
+    }
+    .btn-yes {
+      padding: 1rem 3rem; border-radius: 999px; font-size: 1.2rem; font-weight: 700;
+      background: linear-gradient(135deg, #7c3aed, #db2777); color: white; border: none;
+      cursor: pointer; box-shadow: 0 0 40px #7c3aed55; transition: all 0.2s;
+    }
+    .btn-yes:hover { transform: scale(1.08); }
+    .btn-no {
+      padding: 0.8rem 2rem; border-radius: 999px; font-size: 1rem; font-weight: 600;
+      background: #1e293b; color: #94a3b8; border: 1px solid #334155;
+      cursor: pointer; position: fixed; transition: all 0.15s ease; z-index: 100;
+    }
+    .no-counter { font-size: 0.75rem; color: #475569; margin-top: 1rem; }
+
+    /* Page 4 — plan inputs */
+    .plan-card {
+      background: #ffffff0a; border: 1px solid #7c3aed44; border-radius: 20px;
+      padding: 1.5rem; max-width: 420px; width: 100%; margin: 1rem auto;
+      backdrop-filter: blur(10px); text-align: left;
+    }
+    .plan-row {
+      display: flex; align-items: flex-start; gap: 0.8rem;
+      padding: 0.6rem 0; border-bottom: 1px solid #ffffff08;
+    }
+    .plan-row:last-child { border-bottom: none; }
+    .plan-row .icon { font-size: 1.3rem; padding-top: 0.1rem; flex-shrink: 0; }
+    .plan-row .label { font-size: 0.72rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.2rem; }
+    .plan-row input, .plan-row textarea {
+      background: transparent; border: none; outline: none;
+      color: white; font-size: 0.92rem; font-family: inherit;
+      width: 100%; resize: none; line-height: 1.5;
+    }
+    .plan-row input::placeholder, .plan-row textarea::placeholder { color: #475569; }
+    .plan-row.readonly input { color: #94a3b8; pointer-events: none; }
+
+    /* Page 5 — summary for him */
+    .summary-card {
+      background: #ffffff0a; border: 1px solid #34d39944; border-radius: 20px;
+      padding: 1.5rem; max-width: 420px; width: 100%; margin: 1rem auto;
+      backdrop-filter: blur(10px); text-align: left;
+    }
+    .summary-row { display: flex; align-items: flex-start; gap: 0.8rem; padding: 0.5rem 0; border-bottom: 1px solid #ffffff08; }
+    .summary-row:last-child { border-bottom: none; }
+    .summary-row .icon { font-size: 1.2rem; flex-shrink: 0; }
+    .summary-row .slabel { font-size: 0.72rem; color: #64748b; text-transform: uppercase; }
+    .summary-row .svalue { font-size: 0.92rem; color: #e2e8f0; margin-top: 0.1rem; font-weight: 500; }
+
+    /* confetti */
+    .confetti-container { position: fixed; inset: 0; pointer-events: none; z-index: 10; }
+    .confetti-piece {
+      position: absolute; top: -20px;
+      animation: confettiFall var(--d) ease-in var(--delay) both;
+    }
+    @keyframes confettiFall {
+      0% { transform: translateY(0) rotate(0deg) translateX(0); opacity: 1; }
+      100% { transform: translateY(110vh) rotate(720deg) translateX(var(--drift)); opacity: 0; }
+    }
+    .heart-big { font-size: 5rem; animation: heartbeat 1s ease-in-out infinite; }
+    @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+
+    .dots {
+      position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 0.5rem; z-index: 5;
+    }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: #334155; transition: all 0.3s; }
+    .dot.active { background: #7c3aed; width: 20px; border-radius: 3px; }
+
+    @media (max-width: 480px) {
+      .reasons-grid { grid-template-columns: 1fr 1fr; }
+      h1 { font-size: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="stars" id="stars"></div>
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+
+  <!-- PAGE 1 — Intro -->
+  <div class="page active" id="page1">
+    <div class="emoji-big">🙋‍♂️</div>
+    <h1>Hey <span class="highlight">Hasini</span>,<br/>just hear me out...</h1>
+    <p class="sub">I know you don't date. I respect that, fully. But this isn't me asking you to date me — I just want to take you out. Once. No labels, no pressure, no weirdness.</p>
+    <button class="btn btn-primary" onclick="goTo(2)">Okay… keep talking 👀</button>
+    <p style="margin-top:1rem; font-size:0.8rem; color:#475569;">(I promise this gets better)</p>
+  </div>
+
+  <!-- PAGE 2 — What it is / isn't -->
+  <div class="page" id="page2">
+    <div class="emoji-big" style="font-size:3rem; margin-bottom:1rem;">📋</div>
+    <h1 style="font-size:clamp(1.5rem,4vw,2.2rem); margin-bottom:0.5rem;">Here's what this <span class="highlight">actually is</span></h1>
+    <p class="sub" style="margin-bottom:1.5rem; font-size:0.95rem;">Let me be very clear 👇</p>
+    <div class="reasons-grid">
+      <div class="reason-card" style="animation-delay:0.1s">
+        <div class="icon">🚫</div>
+        <div class="label">What it's NOT</div>
+        <div class="value">Not a date. Not a relationship. Not weird.</div>
+      </div>
+      <div class="reason-card" style="animation-delay:0.2s">
+        <div class="icon">✅</div>
+        <div class="label">What it IS</div>
+        <div class="value">Two people, good food, good vibes. That's it.</div>
+      </div>
+      <div class="reason-card" style="animation-delay:0.3s">
+        <div class="icon">🤝</div>
+        <div class="label">My promise</div>
+        <div class="value">Your comfort comes first. Always.</div>
+      </div>
+      <div class="reason-card" style="animation-delay:0.4s">
+        <div class="icon">🏃‍♂️</div>
+        <div class="label">If it's awkward</div>
+        <div class="value">I'll literally walk home. No questions asked.</div>
+      </div>
+    </div>
+    <button class="btn btn-primary" onclick="goTo(3)">Okay fine, what's the ask? 🤔</button>
+  </div>
+
+  <!-- PAGE 3 — The Ask -->
+  <div class="page" id="page3">
+    <div class="emoji-big" style="font-size:3rem; margin-bottom:1rem;">💌</div>
+    <h1 style="font-size:clamp(1.5rem,4vw,2.4rem);">Hasini, would you let me <span class="highlight">take you out?</span></h1>
+    <p class="sub" style="margin-bottom:0.5rem; font-size:0.95rem;">Not a date. Just an outing. You, me, good vibes — nothing more unless YOU decide otherwise.</p>
+    <div class="yesno-container" id="yesno">
+      <button class="btn-yes" onclick="goTo(4)">Okay fine, yes 🥹</button>
+      <button class="btn-no" id="noBtn" onmouseover="runAway()" onclick="runAway()">No</button>
+    </div>
+    <p class="no-counter" id="noCounter"></p>
+  </div>
+
+  <!-- PAGE 4 — Hasini fills in the plan -->
+  <div class="page" id="page4">
+    <div class="confetti-container" id="confetti"></div>
+    <div class="heart-big">🎉</div>
+    <h1 style="margin-top:0.5rem; font-size:clamp(1.5rem,4vw,2.2rem);">
+      Hasini said <span class="highlight">yes!!</span>
+    </h1>
+    <p class="sub" style="margin-bottom:0.5rem; font-size:0.9rem;">
+      Hasini, fill in what works for you 👇 He'll see it on the next page.
+    </p>
+
+    <div class="plan-card">
+      <div class="plan-row">
+        <div class="icon">🍽️</div>
+        <div style="flex:1">
+          <div class="label">What food are you feeling?</div>
+          <input id="inp-food" type="text" placeholder="e.g. sushi, pizza, anything honestly..." maxlength="80" />
+        </div>
+      </div>
+      <div class="plan-row">
+        <div class="icon">📅</div>
+        <div style="flex:1">
+          <div class="label">When are you free?</div>
+          <input id="inp-when" type="text" placeholder="e.g. Saturday evening, next weekend..." maxlength="80" />
+        </div>
+      </div>
+      <div class="plan-row">
+        <div class="icon">📍</div>
+        <div style="flex:1">
+          <div class="label">Any place in mind? (optional)</div>
+          <input id="inp-place" type="text" placeholder="e.g. somewhere chill, you pick..." maxlength="80" />
+        </div>
+      </div>
+      <div class="plan-row">
+        <div class="icon">💬</div>
+        <div style="flex:1">
+          <div class="label">Anything else he should know?</div>
+          <textarea id="inp-note" rows="2" placeholder="e.g. I'm allergic to nuts, keep it lowkey..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn btn-primary" id="doneBtn" onclick="goTo(5)" style="margin-top:0.5rem;">Done ✅</button>
+  </div>
+
+  <!-- PAGE 5 — Summary for him -->
+  <div class="page" id="page5">
+    <div class="emoji-big" style="font-size:3.5rem; margin-bottom:0.5rem;">🤩</div>
+    <h1 style="font-size:clamp(1.5rem,4vw,2.2rem);">Here's what <span class="highlight">Hasini said</span></h1>
+    <p class="sub" style="margin-bottom:0.5rem; font-size:0.85rem;">She filled in the plan. Don't mess this up 😭</p>
+
+    <div class="summary-card">
+      <div class="summary-row">
+        <div class="icon">🍽️</div>
+        <div>
+          <div class="slabel">Food</div>
+          <div class="svalue" id="out-food">—</div>
+        </div>
+      </div>
+      <div class="summary-row">
+        <div class="icon">📅</div>
+        <div>
+          <div class="slabel">When</div>
+          <div class="svalue" id="out-when">—</div>
+        </div>
+      </div>
+      <div class="summary-row">
+        <div class="icon">📍</div>
+        <div>
+          <div class="slabel">Place</div>
+          <div class="svalue" id="out-place">—</div>
+        </div>
+      </div>
+      <div class="summary-row">
+        <div class="icon">💬</div>
+        <div>
+          <div class="slabel">Notes from Hasini</div>
+          <div class="svalue" id="out-note">—</div>
+        </div>
+      </div>
+    </div>
+
+    <p style="color:#34d399; font-size:0.85rem; margin-top:0.5rem;">Now go make it happen 🙌</p>
+  </div>
+
+  <!-- Dots -->
+  <div class="dots">
+    <div class="dot active" id="dot1"></div>
+    <div class="dot" id="dot2"></div>
+    <div class="dot" id="dot3"></div>
+    <div class="dot" id="dot4"></div>
+    <div class="dot" id="dot5"></div>
+  </div>
+
+<script>
+  // Stars
+  const starsEl = document.getElementById('stars');
+  for (let i = 0; i < 120; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    s.style.left = Math.random() * 100 + '%';
+    s.style.top = Math.random() * 100 + '%';
+    s.style.setProperty('--d', (2 + Math.random() * 4) + 's');
+    s.style.setProperty('--o', (0.2 + Math.random() * 0.8).toFixed(2));
+    s.style.animationDelay = (Math.random() * 4) + 's';
+    starsEl.appendChild(s);
+  }
+
+  let currentPage = 1;
+
+  function goTo(n) {
+    if (n === 5) fillSummary();
+    document.getElementById('page' + currentPage).classList.remove('active');
+    document.getElementById('dot' + currentPage).classList.remove('active');
+    currentPage = n;
+    document.getElementById('page' + n).classList.add('active');
+    document.getElementById('dot' + n).classList.add('active');
+    if (n === 4) launchConfetti();
+  }
+
+  function fillSummary() {
+    const food  = document.getElementById('inp-food').value.trim()  || 'She left it open 😄';
+    const when  = document.getElementById('inp-when').value.trim()  || 'TBD — ask her!';
+    const place = document.getElementById('inp-place').value.trim() || 'No preference — you pick!';
+    const note  = document.getElementById('inp-note').value.trim()  || 'Nothing extra 👍';
+    document.getElementById('out-food').textContent  = food;
+    document.getElementById('out-when').textContent  = when;
+    document.getElementById('out-place').textContent = place;
+    document.getElementById('out-note').textContent  = note;
+  }
+
+  // No button runs away
+  let noClicks = 0;
+  const messages = [
+    "No", "Are you sure?", "Not even as friends?", "It's not a date tho 🥺",
+    "I said no pressure Hasini!", "Still running? 😭", "This is embarrassing for me 😭",
+    "Okay but the food will be SO good", "I'll literally behave I swear",
+    "Come on Hasini please 😭", "I'm not that bad am I?", "Just one outing!!",
+    "The food alone is worth it 🍕", "I'll pay. Full stop.", "You won't regret it I promise",
+    "My mom says I'm a great person 😭", "Even my dog likes me fyi",
+    "I've been practicing being fun", "Okay what if I throw in dessert too",
+    "I will literally cry 😭", "This button is getting tired too",
+    "Fine I'll also plan the whole thing", "Zero weirdness. Pinky promise 🤙",
+    "Hasini plsplspls", "What do I have to do 😭", "Name your price 💀",
+    "I'll wear the fit you want", "We can bring a friend if that helps?",
+    "Okay I'm running out of ideas but still NO to your No",
+    "The universe wants you to say yes btw", "Mercury is in retrograde say yes",
+    "A wise person once said yes 🧙", "Studies show saying yes = happiness 📊",
+    "I am 100% that guy (trust)", "Okay last time I promise... SAY YES 😭"
+  ];
+
+  function runAway() {
+    noClicks++;
+    const btn = document.getElementById('noBtn');
+    const x = Math.random() * (window.innerWidth - 140);
+    const y = Math.random() * (window.innerHeight - 60);
+    btn.style.left = x + 'px';
+    btn.style.top  = y + 'px';
+
+    // cycle through messages, then generate random ones infinitely
+    if (noClicks <= messages.length) {
+      btn.textContent = messages[noClicks - 1];
+    } else {
+      const extras = [
+        `${noClicks} times and still no? 💀`,
+        `Bro she's really clicking No ${noClicks} times 😭`,
+        `${noClicks} attempts. I respect the commitment tbh`,
+        `Click #${noClicks}... but have you considered YES?`,
+        `At this point just say yes Hasini 😭 (attempt ${noClicks})`,
+        `${noClicks} No's = ${noClicks} reasons I'm still trying 🙃`,
+        `I'm not giving up. Ever. (click ${noClicks})`,
+      ];
+      btn.textContent = extras[noClicks % extras.length];
+    }
+
+    btn.style.fontSize = Math.max(0.5, 1 - Math.min(noClicks, 10) * 0.04) + 'rem';
+    document.getElementById('noCounter').textContent = `The "No" button has escaped ${noClicks} time${noClicks > 1 ? 's' : ''} 😭`;
+  }
+
+  // Confetti
+  function launchConfetti() {
+    const colors = ['#7c3aed','#db2777','#f472b6','#a78bfa','#34d399','#fbbf24','#60a5fa'];
+    const container = document.getElementById('confetti');
+    container.innerHTML = '';
+    for (let i = 0; i < 100; i++) {
+      const piece = document.createElement('div');
+      piece.className = 'confetti-piece';
+      piece.style.left = Math.random() * 100 + 'vw';
+      piece.style.setProperty('--d', (1.5 + Math.random() * 2) + 's');
+      piece.style.setProperty('--delay', (Math.random() * 1.5) + 's');
+      piece.style.setProperty('--drift', (Math.random() * 200 - 100) + 'px');
+      piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+      piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+      piece.style.width  = (6 + Math.random() * 8) + 'px';
+      piece.style.height = (6 + Math.random() * 8) + 'px';
+      container.appendChild(piece);
+    }
+  }
+</script>
+</body>
+</html>
