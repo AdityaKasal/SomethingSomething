@@ -85,7 +85,7 @@
     .btn-no {
       padding: 0.8rem 2rem; border-radius: 999px; font-size: 1rem; font-weight: 600;
       background: #1e293b; color: #94a3b8; border: 1px solid #334155;
-      cursor: pointer; position: fixed; transition: all 0.15s ease; z-index: 100;
+      cursor: pointer; position: fixed; transition: left 0.15s ease, top 0.15s ease; z-index: 100;
     }
     .no-counter { font-size: 0.75rem; color: #475569; margin-top: 1rem; }
 
@@ -216,8 +216,8 @@
     <p class="sub" style="margin-bottom:0.5rem; font-size:0.95rem;">Not a date. Just an outing. You, me, good vibes — nothing more unless YOU decide otherwise.</p>
     <div class="yesno-container" id="yesno">
       <button class="btn-yes" onclick="goTo(4)">Okay fine, yes 🥹</button>
-      <button class="btn-no" id="noBtn" onmouseover="runAway()" onclick="runAway()">No</button>
     </div>
+    <button class="btn-no" id="noBtn" onmouseover="runAway()" onclick="runAway()">No</button>
     <p class="no-counter" id="noCounter"></p>
   </div>
 
@@ -342,6 +342,14 @@
     document.getElementById('page' + n).classList.add('active');
     document.getElementById('dot' + n).classList.add('active');
     if (n === 4) launchConfetti();
+    if (n === 3) placeNoBtn();
+  }
+
+  function placeNoBtn() {
+    const btn = document.getElementById('noBtn');
+    // Place No button in bottom-right corner, clearly away from Yes
+    btn.style.left = (window.innerWidth - 140) + 'px';
+    btn.style.top  = (window.innerHeight - 80) + 'px';
   }
 
   function submitAndGo() {
