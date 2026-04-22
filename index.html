@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hey Hasini 🌸</title>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
@@ -247,7 +248,7 @@
       </div>
     </div>
 
-    <button class="btn btn-primary" id="doneBtn" onclick="goTo(5)" style="margin-top:0.5rem;">Done ✅</button>
+    <button class="btn btn-primary" id="doneBtn" onclick="submitAndGo()" style="margin-top:0.5rem;">Done ✅</button>
   </div>
 
   <!-- PAGE 5 — Summary for him -->
@@ -300,6 +301,9 @@
   </div>
 
 <script>
+  // Init EmailJS
+  emailjs.init('Gh_9z-xzfMAdwNikj');
+
   // Stars
   const starsEl = document.getElementById('stars');
   for (let i = 0; i < 120; i++) {
@@ -323,6 +327,24 @@
     document.getElementById('page' + n).classList.add('active');
     document.getElementById('dot' + n).classList.add('active');
     if (n === 4) launchConfetti();
+  }
+
+  function submitAndGo() {
+    const btn = document.getElementById('doneBtn');
+    btn.textContent = 'Sending... 📨';
+    btn.disabled = true;
+
+    const food  = document.getElementById('inp-food').value.trim()  || 'She left it open 😄';
+    const when  = document.getElementById('inp-when').value.trim()  || 'TBD — ask her!';
+    const place = document.getElementById('inp-place').value.trim() || 'No preference — you pick!';
+    const note  = document.getElementById('inp-note').value.trim()  || 'Nothing extra 👍';
+
+    emailjs.send('service_zep0dlb', 'template_3ukw4zo', { food, when, place, note })
+      .then(() => { goTo(5); })
+      .catch(() => {
+        // still go to page 5 even if email fails
+        goTo(5);
+      });
   }
 
   function fillSummary() {
