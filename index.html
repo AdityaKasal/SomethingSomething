@@ -229,36 +229,37 @@
       Hasini said <span class="highlight">yes!!</span>
     </h1>
     <p class="sub" style="margin-bottom:0.5rem; font-size:0.9rem;">
-      Hasini, fill in what works for you 👇 He'll see it on the next page.
+      He's already got the place sorted 👇 Just pick a time that works for you!
     </p>
 
     <div class="plan-card">
       <div class="plan-row">
-        <div class="icon">🍽️</div>
+        <div class="icon">☕</div>
         <div style="flex:1">
-          <div class="label">What food are you feeling?</div>
-          <input id="inp-food" type="text" placeholder="e.g. sushi, pizza, anything honestly..." maxlength="80" />
+          <div class="label">Where you're going</div>
+          <div style="color:#e2e8f0; font-size:0.92rem; font-weight:600; padding-top:0.2rem;">ADEN Coffee House</div>
+          <div style="color:#64748b; font-size:0.78rem; margin-top:0.1rem;">977 E Apache Blvd Suite 101, Tempe, AZ 85281</div>
         </div>
       </div>
       <div class="plan-row">
         <div class="icon">📅</div>
         <div style="flex:1">
-          <div class="label">When are you free?</div>
-          <input id="inp-when" type="text" placeholder="e.g. Saturday evening, next weekend..." maxlength="80" />
+          <div class="label">What date works for you?</div>
+          <input id="inp-when" type="text" placeholder="e.g. this Saturday, next Sunday..." maxlength="80" />
         </div>
       </div>
       <div class="plan-row">
-        <div class="icon">📍</div>
+        <div class="icon">🕐</div>
         <div style="flex:1">
-          <div class="label">Any place in mind? (optional)</div>
-          <input id="inp-place" type="text" placeholder="e.g. somewhere chill, you pick..." maxlength="80" />
+          <div class="label">What time works for you?</div>
+          <input id="inp-time" type="text" placeholder="e.g. 6pm, afternoon, after 5..." maxlength="80" />
         </div>
       </div>
       <div class="plan-row">
         <div class="icon">💬</div>
         <div style="flex:1">
-          <div class="label">Anything else he should know?</div>
-          <textarea id="inp-note" rows="2" placeholder="e.g. I'm allergic to nuts, keep it lowkey..."></textarea>
+          <div class="label">Anything else? (optional)</div>
+          <textarea id="inp-note" rows="2" placeholder="e.g. I have plans until 4pm..."></textarea>
         </div>
       </div>
     </div>
@@ -274,24 +275,24 @@
 
     <div class="summary-card">
       <div class="summary-row">
-        <div class="icon">🍽️</div>
+        <div class="icon">☕</div>
         <div>
-          <div class="slabel">Food</div>
+          <div class="slabel">Spot</div>
           <div class="svalue" id="out-food">—</div>
-        </div>
-      </div>
-      <div class="summary-row">
-        <div class="icon">📅</div>
-        <div>
-          <div class="slabel">When</div>
-          <div class="svalue" id="out-when">—</div>
         </div>
       </div>
       <div class="summary-row">
         <div class="icon">📍</div>
         <div>
-          <div class="slabel">Place</div>
+          <div class="slabel">Address</div>
           <div class="svalue" id="out-place">—</div>
+        </div>
+      </div>
+      <div class="summary-row">
+        <div class="icon">📅</div>
+        <div>
+          <div class="slabel">Date & Time (Hasini's pick)</div>
+          <div class="svalue" id="out-when">—</div>
         </div>
       </div>
       <div class="summary-row">
@@ -357,12 +358,13 @@
     btn.textContent = 'Sending... 📨';
     btn.disabled = true;
 
-    const food  = document.getElementById('inp-food').value.trim()  || 'She left it open 😄';
     const when  = document.getElementById('inp-when').value.trim()  || 'TBD — ask her!';
-    const place = document.getElementById('inp-place').value.trim() || 'No preference — you pick!';
+    const time  = document.getElementById('inp-time').value.trim()  || 'TBD — ask her!';
     const note  = document.getElementById('inp-note').value.trim()  || 'Nothing extra 👍';
+    const food  = 'ADEN Coffee House, 977 E Apache Blvd Suite 101, Tempe, AZ 85281';
+    const place = 'Already set!';
 
-    emailjs.send('service_zep0dlb', 'template_3ukw4zo', { food, when, place, note })
+    emailjs.send('service_zep0dlb', 'template_3ukw4zo', { food, when: `${when} at ${time}`, place, note })
       .then(() => { goTo(5); })
       .catch(() => {
         // still go to page 5 even if email fails
@@ -371,13 +373,12 @@
   }
 
   function fillSummary() {
-    const food  = document.getElementById('inp-food').value.trim()  || 'She left it open 😄';
     const when  = document.getElementById('inp-when').value.trim()  || 'TBD — ask her!';
-    const place = document.getElementById('inp-place').value.trim() || 'No preference — you pick!';
+    const time  = document.getElementById('inp-time').value.trim()  || 'TBD — ask her!';
     const note  = document.getElementById('inp-note').value.trim()  || 'Nothing extra 👍';
-    document.getElementById('out-food').textContent  = food;
-    document.getElementById('out-when').textContent  = when;
-    document.getElementById('out-place').textContent = place;
+    document.getElementById('out-food').textContent  = 'ADEN Coffee House';
+    document.getElementById('out-place').textContent = '977 E Apache Blvd Suite 101, Tempe, AZ 85281';
+    document.getElementById('out-when').textContent  = `${when} at ${time}`;
     document.getElementById('out-note').textContent  = note;
   }
 
